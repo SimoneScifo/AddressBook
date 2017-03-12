@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/cardview_light_background"
+    android:layout_margin="2dp"
+    android:elevation="3dp">
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/face_profile"
+    android:id="@+id/imgUser"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nome e cognome"
+        android:id="@+id/nameTV"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/imgUser"/>
+    <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/nameTV"
+    android:text="Telefono"
+        android:id="@+id/phoneTV"
+        android:textSize="15dp"
+        android:inputType="phone"
+        android:layout_toRightOf="@+id/imgUser"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/phoneTV"
+        android:text="Indirizzo"
+        android:id="@+id/addressTV"
+        android:layout_toRightOf="@+id/imgUser"
+        android:inputType="textPostalAddress"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addressTV"
+        android:text="Email"
+        android:id="@+id/emailTV"
+        android:layout_toRightOf="@+id/imgUser"
+        android:inputType="textPostalAddress"/>
+</RelativeLayout>
