@@ -9,6 +9,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +27,7 @@ import static simone.it.addressbook.Activities.AddUserActivity.USER_ADDRESS_KEY;
 import static simone.it.addressbook.Activities.AddUserActivity.USER_EMAIL_KEY;
 import static simone.it.addressbook.Activities.AddUserActivity.USER_NAME_KEY;
 import static simone.it.addressbook.Activities.AddUserActivity.USER_PHONE_KEY;
+import static simone.it.addressbook.R.id.addPhoneET;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
@@ -33,8 +37,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText searchUserET;
     FloatingActionButton btnAdd;
 
-    User user = new User();
 
+    User user = new User();
+    User editUser = new User ();
 
     RecyclerView.LayoutManager layoutManager;
     UserAdapter adapter;
@@ -78,6 +83,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             adapter.addUser(user);
             Toast.makeText(getApplicationContext(), "Item added", Toast.LENGTH_SHORT).show();
         }
+        else if (requestCode == REQUEST_DELETE && resultCode == RESULT_OK) {
+            //remove record
+            database.deleteUser(adapter.getUser(adapter.getPosition()));
+            // remove from adapter
+            adapter.deleteUser(adapter.getPosition());
+            Toast.makeText(getApplicationContext(), "Item deleted", Toast.LENGTH_SHORT).show();
+        }
+        else if (requestCode == REQUEST_EDIT && resultCode == RESULT_OK) {
+                editUser.setName(data.getStringExtra(USER_NAME_KEY));
+                editUser.setAddress(data.getStringExtra(USER_ADDRESS_KEY));
+                editUser.setPhone(data.getStringExtra(USER_PHONE_KEY));
+                editUser.setEmail(data.getStringExtra(USER_EMAIL_KEY));
+                userRV.scrollToPosition(0);
+
+                adapter.updateUser(editUser, adapter.getPosition());
+                database.updateUser(editUser);
+
+                Toast.makeText(getApplicationContext(), "Edit success", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -96,5 +120,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             searchUserET.setHint("Cerca");
             adapter.setDataSet(database.getAllUsers());
         }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_delete:
+                //remove record
+                database.deleteUser(adapter.getUser(adapter.getPosition()));
+                // remove from adapter
+                adapter.deleteUser(adapter.getPosition());
+                break;
+
+            case R.id.action_edit:
+
+                editUser = adapter.getUser(adapter.getPosition());
+                Intent intent = new Intent(this, AddUserActivity.class);
+                intent.putExtra(USER_NAME_KEY, editUser.getName());
+                intent.putExtra(USER_ADDRESS_KEY, editUser.getAddress());
+                intent.putExtra(USER_PHONE_KEY, editUser.getPhone());
+                intent.putExtra(USER_EMAIL_KEY, editUser.getEmail());
+                startActivityForResult(intent, REQUEST_EDIT);
+                break;
+
+        }
+
+        return super.onContextItemSelected(item);
     }
 }

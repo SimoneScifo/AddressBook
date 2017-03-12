@@ -12,9 +12,14 @@
         <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.DIAL"/>
+                <action android:name="android.intent.action.SENDTO"/>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.SEND"/>
             </intent-filter>
+            <uses-feature android:name="android.hardware.camera"
+                android:required="true" />
         </activity>
         <activity android:name=".Activities.AddUserActivity" />
         <activity

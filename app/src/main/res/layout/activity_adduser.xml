@@ -68,6 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:text="ANNULLA"
+            android:textColor="@color/colorAccent"
             style="@style/Base.Widget.AppCompat.Button.Borderless"/>
 
         <Button
@@ -77,6 +78,7 @@
             android:layout_weight="5"
             android:layout_gravity="end"
             android:text="SALVA"
+            android:textColor="@color/colorAccent"
             style="@style/Base.Widget.AppCompat.Button.Borderless"/>
     </LinearLayout>
 </LinearLayout>

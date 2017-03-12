@@ -16,14 +16,15 @@ import simone.it.addressbook.R;
  */
 
 public class AddUserActivity extends AppCompatActivity implements View.OnClickListener {
-    final static String USER_NAME_KEY = "USER_NAME_KEY";
-    final static String USER_ADDRESS_KEY = "USER_ADDRESS_KEY";
-    final static String USER_PHONE_KEY = "USER_PHONE_KEY";
-    final static String USER_EMAIL_KEY = "USER_EMAIL_KEY";
+    public final static String USER_NAME_KEY = "USER_NAME_KEY";
+    public final static String USER_ADDRESS_KEY = "USER_ADDRESS_KEY";
+    public final static String USER_PHONE_KEY = "USER_PHONE_KEY";
+    public final static String USER_EMAIL_KEY = "USER_EMAIL_KEY";
 
     TextInputEditText addNameET, addAddressET, addPhoneET, addEmailET;
     Button btnSave, btnCancel;
     ImageButton btnAddPhoto;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,17 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
         btnAddPhoto = (ImageButton) findViewById(R.id.btnAddPhoto);
         btnSave.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
+
+        intent = getIntent();
+        if (getIntent() != null) {
+            if (getIntent().getStringExtra(USER_NAME_KEY) != null) {
+                addNameET.setText(getIntent().getStringExtra(USER_NAME_KEY));
+                addAddressET.setText(getIntent().getStringExtra(USER_ADDRESS_KEY));
+                addPhoneET.setText(getIntent().getStringExtra(USER_PHONE_KEY));
+                addEmailET.setText(getIntent().getStringExtra(USER_EMAIL_KEY));
+            }
+        }
+
     }
 
     @Override
@@ -52,6 +64,9 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
             finish();
         } else if (v.getId() == R.id.btnCancel) {
             finish();
+        }
+        else if (v.getId() == R.id.btnAddPhoto){
+
         }
     }
 }
